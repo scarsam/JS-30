@@ -96,40 +96,27 @@
   </div>
 
 <script>
-  const inbox = document.querySelector('.inbox');
-  const items = document.querySelectorAll('.item');
-  const itemsArray = Array.from(items);
-  let startIndex = null;
-  let endIndex = null;
+  const checkboxes = document.querySelectorAll('.item input');
+  let lastChecked;
 
-  function checkInputIndex(event) {
-    const item = event.target.closest('.item');
-    const input = item.querySelector('input');
-    if (event.shiftKey === false) {
-      if (input.checked) {
-        startIndex = itemsArray.indexOf(item);
-      }
-    } else if (event.shiftKey === true) {
-      if (input.checked) {
-        endIndex = itemsArray.indexOf(item);
-      }
+  function checked(event) {
+    let inBetween = false;
+
+    if (event.shiftKey && this.checked) {
+      checkboxes.forEach(checkbox => {
+        if (checkbox === this || checkbox === lastChecked) {
+          inBetween = !inBetween;
+        }
+        if (inBetween) {
+          checkbox.checked = true;
+        }
+      });
     }
-    addCheckMark();
+
+    lastChecked = this;
   }
 
-  function addCheckMark() {
-    let rangeArray = [startIndex, endIndex];
-    if (rangeArray.every(index => index !== null)) {
-      const [start, end] = rangeArray.sort();
-      for (let i = start; i <= end; i++) {
-        itemsArray[i].children[0].checked = true;
-      }
-      startIndex = null;
-      endIndex = null;
-    }
-  }
-  
-  inbox.addEventListener('click', checkInputIndex)
+  checkboxes.forEach(checkbox => checkbox.addEventListener('click', checked));
 </script>
 </body>
 </html>
