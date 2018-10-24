@@ -23,12 +23,14 @@
       <input type="text" name="item" placeholder="Item Name" required>
       <input type="submit" value="+ Add Item">
     </form>
+    <button class="remove-all">Remove all</button>
   </div>
 
 <script>
   const addItems = document.querySelector('.add-items');
   const itemsList = document.querySelector('.plates');
-  const items = JSON.parse(localStorage.getItem('items')) || [];
+  const removeAll = document.querySelector('.remove-all');
+  let items = JSON.parse(localStorage.getItem('items')) || [];
   
   function addItem(e) {
     e.preventDefault();
@@ -50,6 +52,12 @@
     localStorage.setItem('items', JSON.stringify(items));
   }
 
+  function clearList() {
+    items = [];
+    localStorage.removeItem('items');
+    displayItems(items, itemsList);
+  }
+
   function displayItems(items = [], list) {
     list.innerHTML = items.map((item, i) => {
       return `
@@ -63,6 +71,7 @@
 
   addItems.addEventListener('submit', addItem);
   itemsList.addEventListener('click', toggleChecked);
+  removeAll.addEventListener('click', clearList);
 
   displayItems(items, itemsList);
 
