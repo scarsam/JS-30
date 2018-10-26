@@ -46,8 +46,45 @@
   <ul id="bands"></ul>
 
 <script>
+const bandsContainer = document.querySelector('#bands');
+const conditions = ['the', 'an', 'a'];
 const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
 
+
+// My Version
+// Sort without The, An, A
+// const sortedBands = bands.sort((a, b) => {
+//   const bandA = a.toLowerCase();
+//   const bandB = b.toLowerCase();
+
+//   const removedArticleA = removeArticle(bandA);
+//   const removedArticleB = removeArticle(bandB);
+
+//   return removedArticleA.localeCompare(removedArticleB)
+// })
+
+// function removeArticle(string) {
+//   const stringToArray = string.split(' ');
+//   const articleFound = conditions.some(condition => stringToArray[0] === condition);
+//   if (articleFound) stringToArray.shift();
+//   return stringToArray.join(' ');
+// }
+
+// const bandsList = bands.map(band => {
+//   return `<li>${band}</li>`
+// }).join('');
+
+// bandsContainer.innerHTML = bandsList;
+
+// V2
+function strip(bandName) {
+  return bandName.replace(/^(a |the |an )/i, '').trim();
+}
+
+const sortedBands = bands.sort((a, b) => strip(a) > strip(b) ? 1 : -1);
+document.querySelector('#bands').innerHTML = sortedBands
+  .map(band => `<li>${band}</li>`)
+  .join('')
 
 </script>
 
