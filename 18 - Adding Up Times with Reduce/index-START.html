@@ -182,6 +182,21 @@
     </li>
   </ul>
 <script>
+  const timeArray = Array.from(document.querySelectorAll('[data-time]'));
+  const seconds = timeArray.reduce((total, video) => {
+    const [minutes, seconds] = video.dataset.time.split(':').map(parseFloat);
+    return total + ((minutes * 60) + seconds);
+  }, 0);
+
+  let secondsLeft = seconds;
+  const hours = Math.floor(secondsLeft / 3600);
+  secondsLeft = secondsLeft % 3600;
+
+  const minutes = Math.floor(secondsLeft / 60);
+  secondsLeft = secondsLeft % 60;
+
+  console.log('h:', hours, 'm:', minutes, 's:', secondsLeft);
+
 </script>
 </body>
 </html>
