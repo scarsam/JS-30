@@ -44,7 +44,7 @@
     const { offsetWidth: width, offsetHeight: height } = hero;
     let { offsetX: x, offsetY: y } = e;
     
-    // If hovering text, add text space from edge + mouse position
+    // If mouseover text, add text space from edge + mouse position
     if (this !== e.target) {
       x += e.target.offsetLeft;
       y += e.target.offsetTop;
